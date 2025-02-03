@@ -1,9 +1,17 @@
 #include "Line3D.h"
 #include <cmath>
+#include <iostream>
+#include <string>
 
-Line3D::Line3D(const Point3D& pt1, const Point3D& pt2) : Line2D(pt1, pt2) {
+Line3D::Line3D(const Point3D& pt1, const Point3D& pt2) 
+    : Line2D(Point2D(pt1.getX(), pt1.getY()), Point2D(pt2.getX(), pt2.getY())) {
+    this->pt1 = pt1;  // Store the full Point3D object
+    this->pt2 = pt2;  // Store the full Point3D object
+
+    
     setLength();
 }
+
 
 void Line3D::setLength() {
     int dx = pt2.getX() - pt1.getX();

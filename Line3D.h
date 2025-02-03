@@ -20,6 +20,9 @@ public:
 
     void setPt1(const Point3D& pt1);
     void setPt2(const Point3D& pt2);
+
+    
+
 };
 
 #endif

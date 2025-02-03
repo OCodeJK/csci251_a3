@@ -17,6 +17,18 @@ public:
 
     void setX(int x);
     void setY(int y);
+
+    //Static comparator functions for sorting
+    static bool compareByX_ASC(const Point2D& a, const Point2D& b);
+    static bool compareByX_DESC(const Point2D& a, const Point2D& b);
+    
+    static bool compareByY_ASC(const Point2D& a, const Point2D& b);
+    static bool compareByY_DESC(const Point2D& a, const Point2D& b);
+
+    static bool compareByDistance_ASC(const Point2D& a, const Point2D& b);
+    static bool compareByDistance_DESC(const Point2D& a, const Point2D& b);
+
+
 };
 
 #endif

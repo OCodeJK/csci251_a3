@@ -13,6 +13,21 @@ public:
 
     int getZ() const;
     void setZ(int z);
+
+    // Static comparator functions for sorting
+    static bool compareByX_ASC(const Point3D& a, const Point3D& b);
+    static bool compareByX_DESC(const Point3D& a, const Point3D& b);
+    
+    static bool compareByY_ASC(const Point3D& a, const Point3D& b);
+    static bool compareByY_DESC(const Point3D& a, const Point3D& b);
+
+    static bool compareByZ_ASC(const Point3D& a, const Point3D& b);
+    static bool compareByZ_DESC(const Point3D& a, const Point3D& b);
+
+    static bool compareByDistance_ASC(const Point3D& a, const Point3D& b);
+    static bool compareByDistance_DESC(const Point3D& a, const Point3D& b);
+
+    
 };
 
 #endif

@@ -32,3 +32,38 @@ void Line2D::setPt2(const Point2D& pt2) {
     this->pt2 = pt2;
     setLength();
 }
+
+//Sorting functions
+// Sort by P1-X in ascending order, then by P1-Y if equal
+bool Line2D::compareByP1X_ASC(const Line2D& a, const Line2D& b) {
+    if (a.getPt1().getX() != b.getPt1().getX()) return a.getPt1().getX() < b.getPt1().getX();
+    return a.getPt1().getY() < b.getPt1().getY();
+}
+
+// Sort by P1-X in descending order, then by P1-Y if equal
+bool Line2D::compareByP1X_DESC(const Line2D& a, const Line2D& b) {
+    if (a.getPt1().getX() != b.getPt1().getX()) return a.getPt1().getX() > b.getPt1().getX();
+    return a.getPt1().getY() > b.getPt1().getY();
+}
+
+// Sort by P1-Y in ascending order, then by P1-X if equal
+bool Line2D::compareByP1Y_ASC(const Line2D& a, const Line2D& b) {
+    if (a.getPt1().getY() != b.getPt1().getY()) return a.getPt1().getY() < b.getPt1().getY();
+    return a.getPt1().getX() < b.getPt1().getX();
+}
+
+// Sort by P1-Y in descending order, then by P1-X if equal
+bool Line2D::compareByP1Y_DESC(const Line2D& a, const Line2D& b) {
+    if (a.getPt1().getY() != b.getPt1().getY()) return a.getPt1().getY() > b.getPt1().getY();
+    return a.getPt1().getX() > b.getPt1().getX();
+}
+
+// Sort by Length in ascending order
+bool Line2D::compareByLength_ASC(const Line2D& a, const Line2D& b) {
+    return a.getScalarValue() < b.getScalarValue();
+}
+
+// Sort by Length in descending order
+bool Line2D::compareByLength_DESC(const Line2D& a, const Line2D& b) {
+    return a.getScalarValue() > b.getScalarValue();
+}
