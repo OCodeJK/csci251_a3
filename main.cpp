@@ -7,10 +7,14 @@
 #include "Line3D.h"
 #include "menu.h"
 #include <limits>
+#include <fstream>
+#include <sstream>
 
 using namespace std;
 
-
+// Global variables to store the last sorted data
+extern string lastFilterCriteria;
+extern ostringstream lastFormattedOutput;
 
 int main() {
     vector<Point2D> point2DRecords;
@@ -22,7 +26,7 @@ int main() {
     string filterCriteria = "Point2D";
     string sortCriteria = "x-ordinate";
     string sortOrder = "ASC";
-    string fileName;
+    string messyFileName;
     int choice;
 
 
@@ -34,69 +38,97 @@ int main() {
             case 1:
                 //Process the file to remove duplicates and parse data
                 cout << "\nPlease enter filename : ";
-                cin >> fileName;
+                cin >> messyFileName;
 
-                readDataFromFile(fileName, point2DRecords, point3DRecords, line2DRecords, line3DRecords);
+                readDataFromFile(messyFileName, point2DRecords, point3DRecords, line2DRecords, line3DRecords);
 
                 break;
 
+            //Select which data to sort Point2D, Point3D or Line2D, Line3D
             case 2:
                 specifyFilterCriteria(filterCriteria, sortCriteria);
-                break;
-
-            case 3:
-                specifySortingCriteria(filterCriteria, sortCriteria);
-                break;
-
-            case 4:
-                specifySortingOrder(sortOrder);
-                break;
-
-            case 5:
                 if (filterCriteria == "Point2D") {
                     filterAndSortPoint2D(point2DRecords, sortCriteria, sortOrder);
-                    cout << "\nPress any key to go back to main menu...";
-                    cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Ignore leftover inputs
-                    cin.get(); // Wait for user input
-
                 } else if (filterCriteria == "Point3D") {
                     filterAndSortPoint3D(point3DRecords, sortCriteria, sortOrder);
-                    cout << "\nPress any key to go back to main menu...";
-                    cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Ignore leftover inputs
-                    cin.get(); // Wait for user input
-
                 } else if (filterCriteria == "Line2D") {
                     filterAndSortLine2D(line2DRecords, sortCriteria, sortOrder);
-                    cout << "\nPress any key to go back to main menu...";
-                    cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Ignore leftover inputs
-                    cin.get(); // Wait for user input
-
                 } else if (filterCriteria == "Line3D") {
                     filterAndSortLine3D(line3DRecords, sortCriteria, sortOrder);
-                    cout << "\nPress any key to go back to main menu...";
-                    cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Ignore leftover inputs
-                    cin.get(); // Wait for user input
-                    
-                } else {
-                    cout << "Filtering for data type not implementing" << endl;
                 }
                 break;
 
+            //Select what to sort by x-ordinate for point or pt1/2 for line 
+            case 3:
+                specifySortingCriteria(filterCriteria, sortCriteria);
+                if (filterCriteria == "Point2D") {
+                    filterAndSortPoint2D(point2DRecords, sortCriteria, sortOrder);
+                } else if (filterCriteria == "Point3D") {
+                    filterAndSortPoint3D(point3DRecords, sortCriteria, sortOrder);
+                } else if (filterCriteria == "Line2D") {
+                    filterAndSortLine2D(line2DRecords, sortCriteria, sortOrder);
+                } else if (filterCriteria == "Line3D") {
+                    filterAndSortLine3D(line3DRecords, sortCriteria, sortOrder);
+                }
+                break;
+
+            //Select whether its ascending or descending
+            case 4:
+                specifySortingOrder(sortOrder);
+                if (filterCriteria == "Point2D") {
+                    filterAndSortPoint2D(point2DRecords, sortCriteria, sortOrder);
+                } else if (filterCriteria == "Point3D") {
+                    filterAndSortPoint3D(point3DRecords, sortCriteria, sortOrder);
+                } else if (filterCriteria == "Line2D") {
+                    filterAndSortLine2D(line2DRecords, sortCriteria, sortOrder);
+                } else if (filterCriteria == "Line3D") {
+                    filterAndSortLine3D(line3DRecords, sortCriteria, sortOrder);
+                }
+                break;
+
+            case 5:
+                if (lastFormattedOutput.str().empty()){
+                    cout << "\nError: No sorted data available. Please sort data first.\n";
+                } else {
+                    cout << lastFormattedOutput.str(); // Print the stored sorted data
+                }
+                cout << "\nPress any key to go back to the main menu...";
+                cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Ignore leftover inputs
+                cin.get(); // Wait for user input
+                break;
+
             case 6:{
+                string fileName;
                 cout << "\nPlease enter filename: "; 
                 cin >> fileName;
 
-                if (filterCriteria == "Point2D"){
-                    storePoint2DToFile(fileName, point2DRecords, filterCriteria, sortCriteria, sortOrder);
+                //Check if the inital .txt file has been even put
+                if (messyFileName == "") {
+                    cout << "\nError: Did not insert any data at all. Please insert messy txt file\n";
+                    break;
+                }
+
+                //Check if lastFormattedOutput is empty (i.e, no sorting has been done yet)
+                if (lastFormattedOutput.str().empty()) {
+
+                    //Perform default sort first
+                    filterAndSortPoint2D(point2DRecords, "x-ordinate", "ASC");
+                }
+                storeSortedDataToFile(fileName);
+                
+                //Line that says how many records stored here
+                if (filterCriteria == "Point2D") {
+                    cout << "\n" << point2DRecords.size() << " records output successfully!" << endl;
+
                 } else if (filterCriteria == "Point3D") {
+                    cout << "\n" << point3DRecords.size() << " records output successfully!" << endl;
 
                 } else if (filterCriteria == "Line2D") {
+                    cout << "\n" << line2DRecords.size() << " records output successfully!" << endl;
 
                 } else if (filterCriteria == "Line3D") {
+                    cout << "\n" << line3DRecords.size() << " records output successfully!" << endl;
 
-                } else {
-                    cout << "Error: Unsupported data type." << endl;
-                    break;
                 }
 
                 cout << "\nGoing back to main menu ...\n";

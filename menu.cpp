@@ -1,5 +1,6 @@
 #include "menu.h"
 #include <fstream>
+#include <sstream>
 #include <set>
 #include <vector>
 #include <string>
@@ -12,6 +13,19 @@
 #include "Line3D.h"
 
 using namespace std;
+
+// Global variables to store the last sorted data
+vector<Point2D> lastSortedPoint2D;
+vector<Point3D> lastSortedPoint3D;
+vector<Line2D> lastSortedLine2D;
+vector<Line3D> lastSortedLine3D;
+string lastFilterCriteria = "";
+string lastSortCriteria = "";
+string lastSortOrder = "";
+
+// Global string stream to store formatted output
+ostringstream lastFormattedOutput;
+
 
 void displayMenu(const string& studentID, const string& studentName, const string& filterCriteria, const string& sortCriteria, const string& sortOrder) {
     cout << endl;
@@ -173,8 +187,25 @@ void specifySortingCriteria(const string& filterCriteria, string& sortCriteria) 
     cout << "\n   Sorting criteria successfully set to '" << sortCriteria << "'!" << endl;
 }
 
+//write the sorted data to .txt file
+void storeSortedDataToFile(const string& fileName) {
+    if (lastFormattedOutput.str().empty()) {
+        cout << "Error: No sorted data available. Please sort data first.\n";
+        return;
+    }
 
+    ofstream outFile(fileName);
+    if (!outFile) {
+        cout << "Error: Unable to create file.\n";
+        return;
+    }
 
+    outFile << lastFormattedOutput.str();
+    outFile.close();
+
+}
+
+//read the .txt and process it
 void readDataFromFile(const string& filename,
                       vector<Point2D>& point2DRecords,
                       vector<Point3D>& point3DRecords,
@@ -292,23 +323,32 @@ void filterAndSortPoint2D(vector<Point2D>& point2DRecords, const string& sortCri
              sortOrder == "ASC" ? Point2D::compareByDistance_ASC : Point2D::compareByDistance_DESC);
     }
 
-    // Step 3: Display the sorted records
-    cout << "\n[ View data ... ]" << endl;
-    cout << " filtering criteria : " << "Point2D" << endl;
-    cout << " sorting criteria : " << sortCriteria << endl;
-    cout << " sorting order : " << sortOrder << endl;
-    cout << endl;
+    // Step 3:
+    // Store sorting criteria for later
+    lastSortedPoint2D = filteredRecords;
+    lastFilterCriteria = "Point2D";
+    lastSortCriteria = sortCriteria;
+    lastSortOrder = sortOrder;
 
-    //Header formatting
-    cout << setw(5) << "X" << setw(6) << "Y";
-    cout << setw(19) << "Dist. Fr Origin";
-    cout << endl;
-    cout << "- - - - - - - - - - - - - - - - - - -" << endl;
+    // Clear previous formatted output
+    lastFormattedOutput.str("");
+    lastFormattedOutput.clear();
 
+    // Format and store output
+    lastFormattedOutput << "[ View data ... ]\n";
+    lastFormattedOutput << " filtering criteria : " << lastFilterCriteria << "\n";
+    lastFormattedOutput << " sorting criteria : " << lastSortCriteria << "\n";
+    lastFormattedOutput << " sorting order : " << lastSortOrder << "\n\n";
+
+    lastFormattedOutput << setw(5) << "X" << setw(6) << "Y";
+    lastFormattedOutput << setw(19) << "Dist. Fr Origin\n";
+    lastFormattedOutput << "- - - - - - - - - - - - - - - - - - -\n";
+
+    //Formatting for the output
     for (const auto& point : filteredRecords) {
-        cout << "[" << setw(4) << point.getX() << ", " 
-             << setw(4) << point.getY() << "]   "
-             << fixed << setprecision(3) << point.getScalarValue() << endl;
+        lastFormattedOutput << "[" << setw(4) << point.getX() << ", " 
+                            << setw(4) << point.getY() << "]   "
+                            << fixed << setprecision(3) << point.getScalarValue() << "\n";
     }
 
     if (filteredRecords.empty()) {
@@ -337,21 +377,31 @@ void filterAndSortPoint3D(vector<Point3D>& point3DRecords, const string& sortCri
              sortOrder == "ASC" ? Point3D::compareByDistance_ASC : Point3D::compareByDistance_DESC);
     }
 
-    // Step 3: Display the sorted records
-    cout << "\n[ View data ... ]" << endl;
-    cout << " filtering criteria : " << "Point3D" << endl;
-    cout << " sorting criteria : " << sortCriteria << endl;
-    cout << " sorting order : " << sortOrder << endl;
-    cout << endl;
+    // Step 3:
+    // Store sorting criteria for later
+    lastSortedPoint3D = filteredRecords;
+    lastFilterCriteria = "Point3D";
+    lastSortCriteria = sortCriteria;
+    lastSortOrder = sortOrder;
+
+    // Clear previous formatted output
+    lastFormattedOutput.str("");
+    lastFormattedOutput.clear();
+
+    // Format and store output
+    lastFormattedOutput << "[ View data ... ]\n";
+    lastFormattedOutput << " filtering criteria : " << lastFilterCriteria << "\n";
+    lastFormattedOutput << " sorting criteria : " << lastSortCriteria << "\n";
+    lastFormattedOutput << " sorting order : " << lastSortOrder << "\n\n";
 
     //Header formatting
-    cout << setw(5) << "X" << setw(6) << "Y" << setw(6) << "Z";
-    cout << setw(19) << "Dist. Fr Origin";
-    cout << endl;
-    cout << "- - - - - - - - - - - - - - - - - - - - - -" << endl;
+    lastFormattedOutput << setw(5) << "X" << setw(6) << "Y" << setw(6) << "Z";
+    lastFormattedOutput << setw(19) << "Dist. Fr Origin";
+    lastFormattedOutput << endl;
+    lastFormattedOutput << "- - - - - - - - - - - - - - - - - - - - - -" << endl;
 
     for (const auto& point : filteredRecords) {
-        cout << "[" << setw(4) << point.getX() << ", " 
+        lastFormattedOutput << "[" << setw(4) << point.getX() << ", " 
              << setw(4) << point.getY() << ", " 
              << setw(4) << point.getZ() << "]   "
              << fixed << setprecision(3) << point.getScalarValue() << endl;
@@ -379,23 +429,32 @@ void filterAndSortLine2D(vector<Line2D>& line2DRecords, const string& sortCriter
              sortOrder == "ASC" ? Line2D::compareByLength_ASC : Line2D::compareByLength_DESC);
     }
 
-    // Step 3: Display the sorted records
-    cout << "\n[ View data ... ]" << endl;
-    cout << " filtering criteria : " << "Line2D" << endl;
-    cout << " sorting criteria : " << sortCriteria << endl;
-    cout << " sorting order : " << sortOrder << endl;
-    cout << endl;
+    // Step 3:
+    // Store sorting criteria for later
+    lastSortedLine2D = filteredRecords;
+    lastFilterCriteria = "Line2D";
+    lastSortCriteria = sortCriteria;
+    lastSortOrder = sortOrder;
+
+    // Clear previous formatted output
+    lastFormattedOutput.str("");
+    lastFormattedOutput.clear();
+
+    // Format and store output
+    lastFormattedOutput << "[ View data ... ]\n";
+    lastFormattedOutput << " filtering criteria : " << lastFilterCriteria << "\n";
+    lastFormattedOutput << " sorting criteria : " << lastSortCriteria << "\n";
+    lastFormattedOutput << " sorting order : " << lastSortOrder << "\n\n";
 
     //Header formatting
-    cout << setw(5) << "P1-X" << setw(6) << "P1-Y";
-    cout << setw(9) << "P2-X" << setw(6) << "P2-Y";
-    cout << setw(10) << "Length";
-    cout << endl;
-    cout << "- - - - - - - - - - - - - - - - - - - - - - -" << endl;
+    lastFormattedOutput << setw(5) << "P1-X" << setw(6) << "P1-Y";
+    lastFormattedOutput << setw(9) << "P2-X" << setw(6) << "P2-Y";
+    lastFormattedOutput << setw(10) << "Length";
+    lastFormattedOutput << endl;
+    lastFormattedOutput << "- - - - - - - - - - - - - - - - - - - - - - -" << endl;
 
-    // Step 5: Print Data with Proper Formatting
     for (const auto& line : filteredRecords) {
-        cout << "[" << setw(4) << line.getPt1().getX() << ", "
+        lastFormattedOutput << "[" << setw(4) << line.getPt1().getX() << ", "
              << setw(4) << line.getPt1().getY() << "]   "
              << "[" << setw(4) << line.getPt2().getX() << ", "
              << setw(4) << line.getPt2().getY() << "]   "
@@ -425,23 +484,33 @@ void filterAndSortLine3D(vector<Line3D>& line3DRecords, const string& sortCriter
                   sortOrder == "ASC" ? Line3D::compareByLength_ASC : Line3D::compareByLength_DESC);
     }
 
-    // Step 3: Display the sorted records
-    cout << "\n[ View data ... ]" << endl;
-    cout << " filtering criteria : Line3D" << endl;
-    cout << " sorting criteria : " << sortCriteria << endl;
-    cout << " sorting order : " << sortOrder << endl;
-    cout << endl;
+    // Step 3:
+    // Store sorting criteria for later
+    lastSortedLine3D = filteredRecords;
+    lastFilterCriteria = "Line3D";
+    lastSortCriteria = sortCriteria;
+    lastSortOrder = sortOrder;
+
+    // Clear previous formatted output
+    lastFormattedOutput.str("");
+    lastFormattedOutput.clear();
+
+    // Format and store output
+    lastFormattedOutput << "[ View data ... ]\n";
+    lastFormattedOutput << " filtering criteria : " << lastFilterCriteria << "\n";
+    lastFormattedOutput << " sorting criteria : " << lastSortCriteria << "\n";
+    lastFormattedOutput << " sorting order : " << lastSortOrder << "\n\n";
 
     //Header formatting
-    cout << setw(5) << "P1-X" << setw(6) << "P1-Y" << setw(6) << "P1-Z";
-    cout << setw(9) << "P2-X" << setw(6) << "P2-Y" << setw(6) << "P2-Z";
-    cout << setw(10) << "Length";
-    cout << endl;
-    cout << "- - - - - - - - - - - - - - - - - - - - - - - - - -" << endl;
+    lastFormattedOutput << setw(5) << "P1-X" << setw(6) << "P1-Y" << setw(6) << "P1-Z";
+    lastFormattedOutput << setw(9) << "P2-X" << setw(6) << "P2-Y" << setw(6) << "P2-Z";
+    lastFormattedOutput << setw(10) << "Length";
+    lastFormattedOutput << endl;
+    lastFormattedOutput << "- - - - - - - - - - - - - - - - - - - - - - - - - -" << endl;
 
-    //Display records and format the width
+    //Values formatting
     for (const auto& line : filteredRecords) {
-        cout << "[" << setw(4) << line.getPt1().getX() << ", "
+        lastFormattedOutput << "[" << setw(4) << line.getPt1().getX() << ", "
                   << setw(4) << line.getPt1().getY() << ", "
                   << setw(4) << line.getPt1().getZ() << "]   "
                   << "[" << setw(4) << line.getPt2().getX() << ", "
@@ -453,72 +522,4 @@ void filterAndSortLine3D(vector<Line3D>& line3DRecords, const string& sortCriter
     if (filteredRecords.empty()) {
         cout << "No records available." << endl;
     }
-}
-
-//Storing the data in .txt file
-template <typename T>
-int storeDataToFile(const string& fileName, const vector<T>& records, 
-                     const string& filterCriteria, const string& sortCriteria, 
-                     const string& sortOrder) {
-    ofstream outFile(fileName);
-
-    if (!outFile) {
-        cerr << "Error: Could not open file for writing!" << endl;
-        return 0;
-    }
-
-    // Write header
-    outFile << "[ View data ... ]\n";
-    outFile << " filtering criteria : " << filterCriteria << "\n";
-    outFile << " sorting criteria : " << sortCriteria << "\n";
-    outFile << " sorting order : " << sortOrder << "\n\n";
-
-    // Write column headers
-    if (filterCriteria == "Point2D") {
-        
-
-    } else if (filterCriteria == "Point3D") {
-        outFile << " X   Y   Z   Dist. Fr Origin\n";
-        outFile << "- - - - - - - - - - - - - - - -\n";
-    } else if (filterCriteria == "Line2D") {
-        outFile << " P1-X  P1-Y     P2-X  P2-Y    Length\n";
-        outFile << "- - - - - - - - - - - - - - - - - - -\n";
-    } else if (filterCriteria == "Line3D") {
-        outFile << " P1-X  P1-Y  P1-Z     P2-X  P2-Y  P2-Z    Length\n";
-        outFile << "- - - - - - - - - - - - - - - - - - - - - - - - - -\n";
-    }
-
-    // Write data
-    int count = 0;
-    for (const auto& record : records) {
-        outFile << record << "\n";  // Assuming operator<< is overloaded for each class
-        count++;
-    }
-
-    outFile.close();
-    return count;
-}
-
-void storePoint2DToFile(const string& filename, const vector<Point2D>& records, const string& filterCriteria, const string& sortCriteria, const string& sortOrder) {
-    ofstream outFile(filename);
-    if (!outFile) {
-        cout << "Error opening file!" << endl;
-        return;
-    }
-
-    outFile << "[ View data ... ]\n";
-    outFile << "filtering criteria : " << filterCriteria << "\n";
-    outFile << "sorting criteria : " << sortCriteria << "\n";
-    outFile << "sorting order : " << sortOrder << "\n\n";
-    outFile << setw(5) << "X" << setw(6) << "Y";
-    outFile << setw(19) << "Dist. Fr Origin";
-    outFile << endl;
-    outFile << "- - - - - - - - - - - - - - - - - - -" << endl;
-
-    for (const auto& point : records) {
-        outFile << "[" << setw(4) << point.getX() << ", " << setw(4) << point.getY() << "]   " << point.getScalarValue() << "\n";
-    }
-
-    outFile.close();
-    cout << "\n" << records.size() << " records output successfully!" << "\n";
 }

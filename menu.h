@@ -24,7 +24,7 @@ void filterAndSortPoint3D(vector<Point3D>& point3DRecords, const string& sortCri
 void filterAndSortLine2D(vector<Line2D>& line2DRecords, const string& sortCriteria, const string& sortOrder);
 void filterAndSortLine3D(vector<Line3D>& line3DRecords, const string& sortCriteria, const string& sortOrder);
 
-//Storing
-void storePoint2DToFile(const string& filename, const vector<Point2D>& records, const string& filterCriteria, const string& sortCriteria, const string& sortOrder);
+//Storing data in .txt file
+void storeSortedDataToFile(const string& fileName);
 
 #endif
