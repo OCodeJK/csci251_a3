@@ -454,3 +454,71 @@ void filterAndSortLine3D(vector<Line3D>& line3DRecords, const string& sortCriter
         cout << "No records available." << endl;
     }
 }
+
+//Storing the data in .txt file
+template <typename T>
+int storeDataToFile(const string& fileName, const vector<T>& records, 
+                     const string& filterCriteria, const string& sortCriteria, 
+                     const string& sortOrder) {
+    ofstream outFile(fileName);
+
+    if (!outFile) {
+        cerr << "Error: Could not open file for writing!" << endl;
+        return 0;
+    }
+
+    // Write header
+    outFile << "[ View data ... ]\n";
+    outFile << " filtering criteria : " << filterCriteria << "\n";
+    outFile << " sorting criteria : " << sortCriteria << "\n";
+    outFile << " sorting order : " << sortOrder << "\n\n";
+
+    // Write column headers
+    if (filterCriteria == "Point2D") {
+        
+
+    } else if (filterCriteria == "Point3D") {
+        outFile << " X   Y   Z   Dist. Fr Origin\n";
+        outFile << "- - - - - - - - - - - - - - - -\n";
+    } else if (filterCriteria == "Line2D") {
+        outFile << " P1-X  P1-Y     P2-X  P2-Y    Length\n";
+        outFile << "- - - - - - - - - - - - - - - - - - -\n";
+    } else if (filterCriteria == "Line3D") {
+        outFile << " P1-X  P1-Y  P1-Z     P2-X  P2-Y  P2-Z    Length\n";
+        outFile << "- - - - - - - - - - - - - - - - - - - - - - - - - -\n";
+    }
+
+    // Write data
+    int count = 0;
+    for (const auto& record : records) {
+        outFile << record << "\n";  // Assuming operator<< is overloaded for each class
+        count++;
+    }
+
+    outFile.close();
+    return count;
+}
+
+void storePoint2DToFile(const string& filename, const vector<Point2D>& records, const string& filterCriteria, const string& sortCriteria, const string& sortOrder) {
+    ofstream outFile(filename);
+    if (!outFile) {
+        cout << "Error opening file!" << endl;
+        return;
+    }
+
+    outFile << "[ View data ... ]\n";
+    outFile << "filtering criteria : " << filterCriteria << "\n";
+    outFile << "sorting criteria : " << sortCriteria << "\n";
+    outFile << "sorting order : " << sortOrder << "\n\n";
+    outFile << setw(5) << "X" << setw(6) << "Y";
+    outFile << setw(19) << "Dist. Fr Origin";
+    outFile << endl;
+    outFile << "- - - - - - - - - - - - - - - - - - -" << endl;
+
+    for (const auto& point : records) {
+        outFile << "[" << setw(4) << point.getX() << ", " << setw(4) << point.getY() << "]   " << point.getScalarValue() << "\n";
+    }
+
+    outFile.close();
+    cout << "\n" << records.size() << " records output successfully!" << "\n";
+}

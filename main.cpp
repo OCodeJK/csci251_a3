@@ -82,11 +82,27 @@ int main() {
                 }
                 break;
 
-            case 6:
-                // Placeholder for storing data into a .txt file named by the user
-                cout << "Storing data... (to be implemented)" << endl;
+            case 6:{
+                cout << "\nPlease enter filename: "; 
+                cin >> fileName;
+
+                if (filterCriteria == "Point2D"){
+                    storePoint2DToFile(fileName, point2DRecords, filterCriteria, sortCriteria, sortOrder);
+                } else if (filterCriteria == "Point3D") {
+
+                } else if (filterCriteria == "Line2D") {
+
+                } else if (filterCriteria == "Line3D") {
+
+                } else {
+                    cout << "Error: Unsupported data type." << endl;
+                    break;
+                }
+
+                cout << "\nGoing back to main menu ...\n";
+
                 break;
-            
+            }
             case 7:
                 //Quit
                 break;
