@@ -21,7 +21,15 @@ public:
     void setPt1(const Point3D& pt1);
     void setPt2(const Point3D& pt2);
 
-    
+    //Static comparator functions for sorting
+    static bool compareByP1X_ASC(const Line3D& a, const Line3D& b);
+    static bool compareByP1X_DESC(const Line3D& a, const Line3D& b);
+
+    static bool compareByP1Y_ASC(const Line3D& a, const Line3D& b);
+    static bool compareByP1Y_DESC(const Line3D& a, const Line3D& b);
+
+    static bool compareByLength_ASC(const Line3D& a, const Line3D& b);
+    static bool compareByLength_DESC(const Line3D& a, const Line3D& b);
 
 };
 

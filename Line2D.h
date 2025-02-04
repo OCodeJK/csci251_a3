@@ -32,6 +32,9 @@ public:
     static bool compareByLength_ASC(const Line2D& a, const Line2D& b);
     static bool compareByLength_DESC(const Line2D& a, const Line2D& b);
 
+    static bool compareByP2X_ASC(const Line2D& a, const Line2D& b);
+    static bool compareByP2X_DESC(const Line2D& a, const Line2D& b);
+
 };
 
 #endif

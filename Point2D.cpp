@@ -35,25 +35,25 @@ void Point2D::setY(int y) {
 // X-ordinate ASC: Sort by X (Ascending), then Y (Ascending)
 bool Point2D::compareByX_ASC(const Point2D& a, const Point2D& b) {
     if (a.getX() != b.getX()) return a.getX() < b.getX(); // Sort X first
-    return a.getY() < b.getY(); // If X is the same, sort Y
+    return a.getY() > b.getY(); // If X is the same, sort Y
 }
 
 // X-ordinate DESC: Sort by X (Descending), then Y (Ascending)
 bool Point2D::compareByX_DESC(const Point2D& a, const Point2D& b) {
     if (a.getX() != b.getX()) return a.getX() > b.getX(); // Sort X Descending
-    return a.getY() < b.getY(); // If X is the same, sort Y Ascending
+    return a.getY() < b.getY(); // If X is the same, sort Y ascending
 }
 
 // Y-ordinate ASC: Sort by Y (Ascending), then X (Ascending)
 bool Point2D::compareByY_ASC(const Point2D& a, const Point2D& b) {
     if (a.getY() != b.getY()) return a.getY() < b.getY(); // Sort Y first
-    return a.getX() < b.getX(); // If Y is the same, sort X
+    return a.getX() < b.getX(); // If Y is the same, sort X ascending
 }
 
 // Y-ordinate DESC: Sort by Y (Descending), then X (Ascending)
 bool Point2D::compareByY_DESC(const Point2D& a, const Point2D& b) {
     if (a.getY() != b.getY()) return a.getY() > b.getY(); // Sort Y Descending
-    return a.getX() < b.getX(); // If Y is the same, sort X Ascending
+    return a.getX() < b.getX(); // If Y is the same, sort X ascending
 }
 
 // Distance ASC: Sort by Distance from Origin (Ascending)

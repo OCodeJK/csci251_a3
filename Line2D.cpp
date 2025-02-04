@@ -34,28 +34,33 @@ void Line2D::setPt2(const Point2D& pt2) {
 }
 
 //Sorting functions
-// Sort by P1-X in ascending order, then by P1-Y if equal
+
+// Sort by P1-X in ascending order, then by P1-Y
 bool Line2D::compareByP1X_ASC(const Line2D& a, const Line2D& b) {
-    if (a.getPt1().getX() != b.getPt1().getX()) return a.getPt1().getX() < b.getPt1().getX();
-    return a.getPt1().getY() < b.getPt1().getY();
+    if (a.getPt1().getX() != b.getPt1().getX()) 
+        return a.getPt1().getX() < b.getPt1().getX();
+    return a.getPt1().getY() < b.getPt1().getY(); // Tie-break by P1-Y
 }
 
-// Sort by P1-X in descending order, then by P1-Y if equal
+// Sort by P1-X in descending order, then by P1-Y
 bool Line2D::compareByP1X_DESC(const Line2D& a, const Line2D& b) {
-    if (a.getPt1().getX() != b.getPt1().getX()) return a.getPt1().getX() > b.getPt1().getX();
-    return a.getPt1().getY() > b.getPt1().getY();
+    if (a.getPt1().getX() != b.getPt1().getX()) 
+        return a.getPt1().getX() > b.getPt1().getX();
+    return a.getPt1().getY() > b.getPt1().getY(); // Tie-break by P1-Y
 }
 
-// Sort by P1-Y in ascending order, then by P1-X if equal
-bool Line2D::compareByP1Y_ASC(const Line2D& a, const Line2D& b) {
-    if (a.getPt1().getY() != b.getPt1().getY()) return a.getPt1().getY() < b.getPt1().getY();
-    return a.getPt1().getX() < b.getPt1().getX();
+// Sort by P2-X in ascending order, then by P2-Y
+bool Line2D::compareByP2X_ASC(const Line2D& a, const Line2D& b) {
+    if (a.getPt2().getX() != b.getPt2().getX()) 
+        return a.getPt2().getX() < b.getPt2().getX();
+    return a.getPt2().getY() < b.getPt2().getY(); // Tie-break by P2-Y
 }
 
-// Sort by P1-Y in descending order, then by P1-X if equal
-bool Line2D::compareByP1Y_DESC(const Line2D& a, const Line2D& b) {
-    if (a.getPt1().getY() != b.getPt1().getY()) return a.getPt1().getY() > b.getPt1().getY();
-    return a.getPt1().getX() > b.getPt1().getX();
+// Sort by P2-X in descending order, then by P2-Y
+bool Line2D::compareByP2X_DESC(const Line2D& a, const Line2D& b) {
+    if (a.getPt2().getX() != b.getPt2().getX()) 
+        return a.getPt2().getX() > b.getPt2().getX();
+    return a.getPt2().getY() > b.getPt2().getY(); // Tie-break by P2-Y
 }
 
 // Sort by Length in ascending order

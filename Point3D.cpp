@@ -23,7 +23,7 @@ void Point3D::setZ(int z) {
 // Static Comparator Functions
 bool Point3D::compareByX_ASC(const Point3D& a, const Point3D& b) {
     if (a.getX() != b.getX()) return a.getX() < b.getX(); // Sort X first
-    if (a.getY() != b.getY()) return a.getY() < b.getY(); // If X is the same, sort Y
+    if (a.getY() != b.getY()) return a.getY() > b.getY(); // If X is the same, sort Y
     return a.getZ() < b.getZ(); // If X and Y are the same, sort Z
 }
 

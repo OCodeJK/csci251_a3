@@ -6,6 +6,7 @@
 #include "Line2D.h"
 #include "Line3D.h"
 #include "menu.h"
+#include <limits>
 
 using namespace std;
 
@@ -54,8 +55,28 @@ int main() {
             case 5:
                 if (filterCriteria == "Point2D") {
                     filterAndSortPoint2D(point2DRecords, sortCriteria, sortOrder);
+                    cout << "\nPress any key to go back to main menu...";
+                    cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Ignore leftover inputs
+                    cin.get(); // Wait for user input
+
                 } else if (filterCriteria == "Point3D") {
                     filterAndSortPoint3D(point3DRecords, sortCriteria, sortOrder);
+                    cout << "\nPress any key to go back to main menu...";
+                    cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Ignore leftover inputs
+                    cin.get(); // Wait for user input
+
+                } else if (filterCriteria == "Line2D") {
+                    filterAndSortLine2D(line2DRecords, sortCriteria, sortOrder);
+                    cout << "\nPress any key to go back to main menu...";
+                    cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Ignore leftover inputs
+                    cin.get(); // Wait for user input
+
+                } else if (filterCriteria == "Line3D") {
+                    filterAndSortLine3D(line3DRecords, sortCriteria, sortOrder);
+                    cout << "\nPress any key to go back to main menu...";
+                    cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Ignore leftover inputs
+                    cin.get(); // Wait for user input
+                    
                 } else {
                     cout << "Filtering for data type not implementing" << endl;
                 }

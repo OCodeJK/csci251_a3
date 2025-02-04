@@ -38,3 +38,43 @@ void Line3D::setPt2(const Point3D& pt2) {
     this->pt2 = pt2;
     setLength();
 }
+
+//Sorting Functions
+
+// Sort by P1-X in ascending order, with tie-breakers by P1-Y, then P1-Z
+bool Line3D::compareByP1X_ASC(const Line3D& a, const Line3D& b) {
+    if (a.getPt1().getX() != b.getPt1().getX()) return a.getPt1().getX() < b.getPt1().getX();
+    if (a.getPt1().getY() != b.getPt1().getY()) return a.getPt1().getY() < b.getPt1().getY();
+    return a.getPt1().getZ() < b.getPt1().getZ();
+}
+
+// Sort by P1-X in descending order, with tie-breakers by P1-Y, then P1-Z
+bool Line3D::compareByP1X_DESC(const Line3D& a, const Line3D& b) {
+    if (a.getPt1().getX() != b.getPt1().getX()) return a.getPt1().getX() > b.getPt1().getX();
+    if (a.getPt1().getY() != b.getPt1().getY()) return a.getPt1().getY() > b.getPt1().getY();
+    return a.getPt1().getZ() > b.getPt1().getZ();
+}
+
+// Sort by P1-Y in ascending order, with tie-breakers by P1-X, then P1-Z
+bool Line3D::compareByP1Y_ASC(const Line3D& a, const Line3D& b) {
+    if (a.getPt1().getY() != b.getPt1().getY()) return a.getPt1().getY() < b.getPt1().getY();
+    if (a.getPt1().getX() != b.getPt1().getX()) return a.getPt1().getX() < b.getPt1().getX();
+    return a.getPt1().getZ() < b.getPt1().getZ();
+}
+
+// Sort by P1-Y in descending order, with tie-breakers by P1-X, then P1-Z
+bool Line3D::compareByP1Y_DESC(const Line3D& a, const Line3D& b) {
+    if (a.getPt1().getY() != b.getPt1().getY()) return a.getPt1().getY() > b.getPt1().getY();
+    if (a.getPt1().getX() != b.getPt1().getX()) return a.getPt1().getX() > b.getPt1().getX();
+    return a.getPt1().getZ() > b.getPt1().getZ();
+}
+
+// Sort by Length in ascending order
+bool Line3D::compareByLength_ASC(const Line3D& a, const Line3D& b) {
+    return a.getScalarValue() < b.getScalarValue();
+}
+
+// Sort by Length in descending order
+bool Line3D::compareByLength_DESC(const Line3D& a, const Line3D& b) {
+    return a.getScalarValue() > b.getScalarValue();
+}
