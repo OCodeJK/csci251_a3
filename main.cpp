@@ -61,6 +61,7 @@ int main() {
 
                 } else if (filterCriteria == "Point3D") {
                     filterAndSortPoint3D(point3DRecords, sortCriteria, sortOrder);
+<<<<<<< HEAD
                     cout << "\nPress any key to go back to main menu...";
                     cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Ignore leftover inputs
                     cin.get(); // Wait for user input
@@ -77,6 +78,12 @@ int main() {
                     cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Ignore leftover inputs
                     cin.get(); // Wait for user input
                     
+=======
+                } else if (filterCriteria == "Line2D") {
+                    filterAndSortLine2D(line2DRecords, sortCriteria, sortOrder);
+                } else if (filterCriteria == "Line3D") {
+                    filterAndSortLine3D(line3DRecords, sortCriteria, sortOrder);
+>>>>>>> 44492dbf5b5d659969d00c818c60d8aae6076c30
                 } else {
                     cout << "Filtering for data type not implementing" << endl;
                 }
