@@ -83,7 +83,7 @@ int main() {
                 break;
 
             case 6:
-                // Placeholder for storing data function
+                // Placeholder for storing data into a .txt file named by the user
                 cout << "Storing data... (to be implemented)" << endl;
                 break;
             
