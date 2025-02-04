@@ -13,7 +13,6 @@
 using namespace std;
 
 // Global variables to store the last sorted data
-extern string lastFilterCriteria;
 extern ostringstream lastFormattedOutput;
 
 int main() {
@@ -86,6 +85,7 @@ int main() {
                 }
                 break;
 
+            //Sorted output
             case 5:
                 if (lastFormattedOutput.str().empty()){
                     cout << "\nError: No sorted data available. Please sort data first.\n";
@@ -97,6 +97,7 @@ int main() {
                 cin.get(); // Wait for user input
                 break;
 
+            //Sorted output into .txt file (user choose the name)
             case 6:{
                 string fileName;
                 cout << "\nPlease enter filename: "; 
@@ -135,8 +136,8 @@ int main() {
 
                 break;
             }
+            //Quit
             case 7:
-                //Quit
                 break;
             default:
                 cout << "Invalid choice! Please try again." << endl;
