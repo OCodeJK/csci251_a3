@@ -17,4 +17,4 @@ bool equals(const T& param1, const T& param2) {
     return param1 == param2; // Uses the overloaded == operator
 }
 
-#endif // MYTEMPLATES_H
+#endif
