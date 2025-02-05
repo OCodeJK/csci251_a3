@@ -27,7 +27,9 @@ public:
     static bool compareByDistance_ASC(const Point3D& a, const Point3D& b);
     static bool compareByDistance_DESC(const Point3D& a, const Point3D& b);
 
-    
+    bool operator==(const Point3D& other) const {
+        return x == other.x && y == other.y && z == other.z;
+    }
 };
 
 #endif

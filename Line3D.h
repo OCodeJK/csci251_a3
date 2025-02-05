@@ -13,6 +13,10 @@ protected:
     void setLength() override;
 
 public:
+    //Default constructor
+    Line3D() : pt1(Point3D(0,0,0)), pt2(Point3D(0,0,0)) {}
+
+    //Existing Constructor
     Line3D(const Point3D& pt1, const Point3D& pt2);
 
     Point3D getPt1() const;
@@ -30,6 +34,10 @@ public:
 
     static bool compareByLength_ASC(const Line3D& a, const Line3D& b);
     static bool compareByLength_DESC(const Line3D& a, const Line3D& b);
+
+    bool operator==(const Line3D& other) const {
+        return pt1 == other.pt1 && pt2 == other.pt2;
+    }
 
 };
 

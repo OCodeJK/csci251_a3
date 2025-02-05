@@ -28,6 +28,10 @@ public:
     static bool compareByDistance_ASC(const Point2D& a, const Point2D& b);
     static bool compareByDistance_DESC(const Point2D& a, const Point2D& b);
 
+    bool operator==(const Point2D& other) const {
+    return x == other.x && y == other.y;
+}
+
 
 };
 

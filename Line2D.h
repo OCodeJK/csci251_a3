@@ -12,6 +12,10 @@ protected:
     virtual void setLength();
 
 public:
+    //Default constructor
+    Line2D() : pt1(Point2D(0, 0)), pt2(Point2D(0, 0)) {}
+
+    //Existing Constructor
     Line2D(const Point2D& pt1, const Point2D& pt2);
 
     Point2D getPt1() const;
@@ -34,6 +38,10 @@ public:
 
     static bool compareByP2X_ASC(const Line2D& a, const Line2D& b);
     static bool compareByP2X_DESC(const Line2D& a, const Line2D& b);
+
+    bool operator==(const Line2D& other) const {
+        return pt1 == other.pt1 && pt2 == other.pt2;
+    }
 
 };
 
