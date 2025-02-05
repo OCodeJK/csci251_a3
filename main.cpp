@@ -88,10 +88,13 @@ int main() {
             //Sorted output
             case 5:
                 if (lastFormattedOutput.str().empty()){
-                    cout << "\nError: No sorted data available. Please sort data first.\n";
-                } else {
-                    cout << lastFormattedOutput.str(); // Print the stored sorted data
+                    // Perform default sorting on Point2D records
+
+                    filterAndSortPoint2D(point2DRecords, sortCriteria, sortOrder);
                 }
+                cout << endl;
+                //Display the sorted data
+                cout << lastFormattedOutput.str();
                 cout << "\nPress any key to go back to the main menu...";
                 cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Ignore leftover inputs
                 cin.get(); // Wait for user input
