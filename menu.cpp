@@ -222,57 +222,44 @@ void readDataFromFile(const string& filename,
     set<string> uniqueLines;
     string line;
 
-    // Regex patterns
-    regex point2DRegex(R"(Point2D,\s+\[\s*(-?\d+),\s*(-?\d+)\s*\])");
-    regex point3DRegex(R"(Point3D,\s+\[\s*(-?\d+),\s*(-?\d+),\s*(-?\d+)\s*\])");
-    regex line2DRegex(R"(Line2D,\s+\[\s*(-?\d+),\s*(-?\d+)\s*\],\s+\[\s*(-?\d+),\s*(-?\d+)\s*\])");
-    regex line3DRegex(R"(Line3D,\s+\[\s*(-?\d+),\s*(-?\d+),\s*(-?\d+)\s*\],\s+\[\s*(-?\d+),\s*(-?\d+),\s*(-?\d+)\s*\])");
-
-    smatch match;
-
-
     while (getline(file, line)) {
-        
         // Skip duplicate lines
         if (!uniqueLines.insert(line).second) {
             continue;
         }
 
-        // Parse Point2D records
-        if (regex_match(line, match, point2DRegex)) {
-            int x = stoi(match[1].str());
-            int y = stoi(match[2].str());
+        istringstream iss(line);
+        string type;
+        iss >> type; // Read the type (e.g., "Point2D," or "Line3D,")
+
+        if (type == "Point2D,") {
+            // Parse Point2D
+            int x, y;
+            char ignore; // To ignore characters like '[', ']', or ',' in the input
+            iss >> ignore >> x >> ignore >> y; // Format: [x, y]
             point2DRecords.emplace_back(x, y);
-            
-        }
-        // Parse Point3D records
-        else if (regex_match(line, match, point3DRegex)) {
-            int x = stoi(match[1].str());
-            int y = stoi(match[2].str());
-            int z = stoi(match[3].str());
+
+        } else if (type == "Point3D,") {
+            // Parse Point3D
+            int x, y, z;
+            char ignore;
+            iss >> ignore >> x >> ignore >> y >> ignore >> z; // Format: [x, y, z]
             point3DRecords.emplace_back(x, y, z);
-    
-        }
-        // Parse Line2D records
-        else if (regex_match(line, match, line2DRegex)) {
-            int x1 = stoi(match[1].str());
-            int y1 = stoi(match[2].str());
-            int x2 = stoi(match[3].str());
-            int y2 = stoi(match[4].str());
+
+        } else if (type == "Line2D,") {
+            // Parse Line2D
+            int x1, y1, x2, y2;
+            char ignore;
+            iss >> ignore >> x1 >> ignore >> y1 >> ignore >> ignore // First point: [x1, y1]
+                >> ignore >> x2 >> ignore >> y2; // Second point: [x2, y2]
             line2DRecords.emplace_back(Point2D(x1, y1), Point2D(x2, y2));
-            
-        }
-        // Parse Line3D records
-        else if (regex_match(line, match, line3DRegex)) {
-            int x1 = stoi(match[1].str());
-            int y1 = stoi(match[2].str());
-            int z1 = stoi(match[3].str());
-            int x2 = stoi(match[4].str());
-            int y2 = stoi(match[5].str());
-            int z2 = stoi(match[6].str());
 
-
-            // Ensure correct construction of Line3D object
+        } else if (type == "Line3D,") {
+            // Parse Line3D
+            int x1, y1, z1, x2, y2, z2;
+            char ignore;
+            iss >> ignore >> x1 >> ignore >> y1 >> ignore >> z1 >> ignore >> ignore // First point: [x1, y1, z1]
+                >> ignore >> x2 >> ignore >> y2 >> ignore >> z2; // Second point: [x2, y2, z2]
             line3DRecords.emplace_back(Point3D(x1, y1, z1), Point3D(x2, y2, z2));
         }
     }
