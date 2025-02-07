@@ -6,7 +6,7 @@ Point2D::Point2D(int x, int y) : x(x), y(y) {
 }
 
 void Point2D::setDistFrOrigin() {
-    distFrOrigin = std::sqrt(x * x + y * y);
+    distFrOrigin = sqrt(x * x + y * y);
 }
 
 int Point2D::getX() const {

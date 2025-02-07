@@ -17,7 +17,7 @@ void Line3D::setLength() {
     int dx = pt2.getX() - pt1.getX();
     int dy = pt2.getY() - pt1.getY();
     int dz = pt2.getZ() - pt1.getZ();
-    length = std::sqrt(dx * dx + dy * dy + dz * dz);
+    length = sqrt(dx * dx + dy * dy + dz * dz);
 }
 
 Point3D Line3D::getPt1() const {

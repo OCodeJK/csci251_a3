@@ -8,7 +8,7 @@ Line2D::Line2D(const Point2D& pt1, const Point2D& pt2) : pt1(pt1), pt2(pt2) {
 void Line2D::setLength() {
     int dx = pt2.getX() - pt1.getX();
     int dy = pt2.getY() - pt1.getY();
-    length = std::sqrt(dx * dx + dy * dy);
+    length = sqrt(dx * dx + dy * dy);
 }
 
 Point2D Line2D::getPt1() const {

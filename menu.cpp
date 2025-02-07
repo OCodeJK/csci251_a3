@@ -341,7 +341,7 @@ void filterAndSortPoint2D(vector<Point2D>& point2DRecords, const string& sortCri
     lastFormattedOutput << " sorting order : " << lastSortOrder << "\n\n";
 
     lastFormattedOutput << setw(5) << "X" << setw(6) << "Y";
-    lastFormattedOutput << setw(19) << "Dist. Fr Origin\n";
+    lastFormattedOutput << setw(20) << "Dist. Fr Origin\n";
     lastFormattedOutput << "- - - - - - - - - - - - - - - - - - -\n";
 
     //Formatting for the output
