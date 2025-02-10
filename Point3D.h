@@ -30,6 +30,14 @@ public:
     bool operator==(const Point3D& other) const {
         return x == other.x && y == other.y && z == other.z;
     }
+
+    friend ostream& operator<<(ostream& os, const Point3D& point) {
+        os << "[" << setw(4) << point.getX() << ", " 
+            << setw(4) << point.getY() << ", " 
+            << setw(4) << point.getZ() << "]   "
+            << fixed << setprecision(3) << point.getScalarValue();
+        return os;
+    }
 };
 
 #endif

@@ -30,17 +30,23 @@ public:
     static bool compareByP1X_ASC(const Line2D& a, const Line2D& b);
     static bool compareByP1X_DESC(const Line2D& a, const Line2D& b);
 
-    static bool compareByP1Y_ASC(const Line2D& a, const Line2D& b);
-    static bool compareByP1Y_DESC(const Line2D& a, const Line2D& b);
-    
-    static bool compareByLength_ASC(const Line2D& a, const Line2D& b);
-    static bool compareByLength_DESC(const Line2D& a, const Line2D& b);
-
     static bool compareByP2X_ASC(const Line2D& a, const Line2D& b);
     static bool compareByP2X_DESC(const Line2D& a, const Line2D& b);
 
+    static bool compareByLength_ASC(const Line2D& a, const Line2D& b);
+    static bool compareByLength_DESC(const Line2D& a, const Line2D& b);
+
     bool operator==(const Line2D& other) const {
         return pt1 == other.pt1 && pt2 == other.pt2;
+    }
+
+    friend ostream& operator<<(ostream& os, const Line2D& line) {
+        os << "[" << setw(4) << line.pt1.getX() << ", "
+             << setw(4) << line.pt1.getY() << "]   "
+             << "[" << setw(4) << line.pt2.getX() << ", "
+             << setw(4) << line.pt2.getY() << "]   "
+             << fixed << setprecision(3) << line.getScalarValue();
+        return os;
     }
 
 };

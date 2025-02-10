@@ -39,6 +39,17 @@ public:
         return pt1 == other.pt1 && pt2 == other.pt2;
     }
 
+    friend ostream& operator<<(ostream& os, const Line3D& line) {
+        os << "[" << setw(4) << line.pt1.getX() << ", "
+            << setw(4) << line.pt1.getY() << ", "
+            << setw(4) << line.pt1.getZ() << "]   "
+            << "[" << setw(4) << line.pt2.getX() << ", "
+            << setw(4) << line.pt2.getY() << ", "
+            << setw(4) << line.pt2.getZ() << "]   "
+            << fixed << setprecision(3) << line.getScalarValue();
+        return os;
+    }
+
 };
 
 #endif

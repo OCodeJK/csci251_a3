@@ -331,7 +331,7 @@ void filterAndSortPoint2D(vector<Point2D>& point2DRecords, const string& sortCri
     lastFormattedOutput << setw(20) << "Dist. Fr Origin\n";
     lastFormattedOutput << "- - - - - - - - - - - - - - - - - - -\n";
 
-    //Formatting for the output
+    //overloaded << operator for the output
     for (const auto& point : filteredRecords) {
         lastFormattedOutput << point << "\n";
     }
@@ -385,11 +385,9 @@ void filterAndSortPoint3D(vector<Point3D>& point3DRecords, const string& sortCri
     lastFormattedOutput << endl;
     lastFormattedOutput << "- - - - - - - - - - - - - - - - - - - - - -" << endl;
 
+    //overloaded << operator for the output
     for (const auto& point : filteredRecords) {
-        lastFormattedOutput << "[" << setw(4) << point.getX() << ", " 
-             << setw(4) << point.getY() << ", " 
-             << setw(4) << point.getZ() << "]   "
-             << fixed << setprecision(3) << point.getScalarValue() << endl;
+        lastFormattedOutput << point << "\n";
     }
 
     if (filteredRecords.empty()) {
@@ -438,12 +436,9 @@ void filterAndSortLine2D(vector<Line2D>& line2DRecords, const string& sortCriter
     lastFormattedOutput << endl;
     lastFormattedOutput << "- - - - - - - - - - - - - - - - - - - - - - -" << endl;
 
+    //overloaded << operator for the output
     for (const auto& line : filteredRecords) {
-        lastFormattedOutput << "[" << setw(4) << line.getPt1().getX() << ", "
-             << setw(4) << line.getPt1().getY() << "]   "
-             << "[" << setw(4) << line.getPt2().getX() << ", "
-             << setw(4) << line.getPt2().getY() << "]   "
-             << fixed << setprecision(3) << line.getScalarValue() << endl;
+        lastFormattedOutput << line << "\n";
     }
 
     //If no records for some reason
@@ -493,15 +488,9 @@ void filterAndSortLine3D(vector<Line3D>& line3DRecords, const string& sortCriter
     lastFormattedOutput << endl;
     lastFormattedOutput << "- - - - - - - - - - - - - - - - - - - - - - - - - -" << endl;
 
-    //Values formatting
+    //overloaded << operator for the output
     for (const auto& line : filteredRecords) {
-        lastFormattedOutput << "[" << setw(4) << line.getPt1().getX() << ", "
-                  << setw(4) << line.getPt1().getY() << ", "
-                  << setw(4) << line.getPt1().getZ() << "]   "
-                  << "[" << setw(4) << line.getPt2().getX() << ", "
-                  << setw(4) << line.getPt2().getY() << ", "
-                  << setw(4) << line.getPt2().getZ() << "]   "
-                  << fixed << setprecision(3) << line.getScalarValue() << endl;
+        lastFormattedOutput << line << "\n";
     }
 
     if (filteredRecords.empty()) {
