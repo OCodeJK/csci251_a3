@@ -333,9 +333,7 @@ void filterAndSortPoint2D(vector<Point2D>& point2DRecords, const string& sortCri
 
     //Formatting for the output
     for (const auto& point : filteredRecords) {
-        lastFormattedOutput << "[" << setw(4) << point.getX() << ", " 
-                            << setw(4) << point.getY() << "]   "
-                            << fixed << setprecision(3) << point.getScalarValue() << "\n";
+        lastFormattedOutput << point << "\n";
     }
 
     if (filteredRecords.empty()) {

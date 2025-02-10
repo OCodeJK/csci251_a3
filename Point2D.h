@@ -1,6 +1,10 @@
 #ifndef POINT2D_H
 #define POINT2D_H
 
+#include <iomanip>
+#include <iostream>
+
+
 class Point2D {
 protected:
     int x, y;
@@ -29,8 +33,15 @@ public:
     static bool compareByDistance_DESC(const Point2D& a, const Point2D& b);
 
     bool operator==(const Point2D& other) const {
-    return x == other.x && y == other.y;
-}
+        return x == other.x && y == other.y;
+    }
+
+    friend std::ostream& operator<<(std::ostream& os, const Point2D& point) {
+        os << "[" << std::setw(4) << point.getX() << ", " 
+           << std::setw(4) << point.getY() << "]   "
+           << std::fixed << std::setprecision(3) << point.getScalarValue();
+        return os;
+    }
 
 
 };
