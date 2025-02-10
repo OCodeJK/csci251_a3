@@ -4,6 +4,8 @@
 #include <iomanip>
 #include <iostream>
 
+using namespace std;
+
 
 class Point2D {
 protected:
@@ -36,10 +38,10 @@ public:
         return x == other.x && y == other.y;
     }
 
-    friend std::ostream& operator<<(std::ostream& os, const Point2D& point) {
-        os << "[" << std::setw(4) << point.getX() << ", " 
-           << std::setw(4) << point.getY() << "]   "
-           << std::fixed << std::setprecision(3) << point.getScalarValue();
+    friend ostream& operator<<(ostream& os, const Point2D& point) {
+        os << "[" << setw(4) << point.getX() << ", " 
+           << setw(4) << point.getY() << "]   "
+           << fixed << setprecision(3) << point.getScalarValue();
         return os;
     }
 
